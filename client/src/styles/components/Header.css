@@ -1,0 +1,22 @@
+@import url('../Colors.css');
+
+.header {
+    height: 56px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: 100%;
+    background-color: var(--color-sidebar-background);
+    border-bottom: 1px solid var(--color-post-border);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar-brand img {
+    margin-right: 8px;
+}
