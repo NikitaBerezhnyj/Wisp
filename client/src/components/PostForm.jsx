@@ -21,7 +21,7 @@ const emojis = [
   "BsEmojiSunglasses",
   "BsEmojiSurprise",
   "BsEmojiTear",
-  "BsEmojiWink",
+  "BsEmojiWink"
 ];
 
 export default function PostForm() {
@@ -35,7 +35,7 @@ export default function PostForm() {
 
   useEffect(randomEmoji, []);
 
-  const handleTextChange = (e) => {
+  const handleTextChange = e => {
     const { value } = e.target;
     if (value.length <= 256) {
       setText(value);

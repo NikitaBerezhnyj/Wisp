@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { reportFromUser } from "../api/userApi";
 import { IoMdClose } from "react-icons/io";
 import "../styles/components/ReportBox.css";
 
@@ -6,14 +7,29 @@ export default function ReportBox({ onClose }) {
   const [text, setText] = useState("");
   const reportBoxRef = useRef(null);
 
-  const handleTextChange = (e) => {
+  const handleTextChange = e => {
     const { value } = e.target;
     setText(value);
   };
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (reportBoxRef.current && !reportBoxRef.current.contains(event.target)) {
       onClose();
+    }
+  };
+
+  const handleReportSubmit = async () => {
+    if (!text.trim()) return;
+
+    const reportData = { message: text };
+
+    try {
+      await reportFromUser(reportData);
+      console.log("Error report sent successfully");
+      setText("");
+      onClose();
+    } catch (error) {
+      console.error("Error sending report:", error);
     }
   };
 
@@ -41,7 +57,11 @@ export default function ReportBox({ onClose }) {
           onChange={handleTextChange}
           rows={12}
         ></textarea>
-        <button className="report-box-send-button" disabled={!text.trim()}>
+        <button
+          className="report-box-send-button"
+          disabled={!text.trim()}
+          onClick={handleReportSubmit}
+        >
           Send
         </button>
       </div>

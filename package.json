@@ -8,9 +8,13 @@
   "scripts": {
     "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
     "start:client": "npm --workspace client run start",
-    "start:server": "npm --workspace server run start"
+    "start:server": "npm --workspace server run start",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "concurrently": "^9.0.1"
+    "concurrently": "^9.0.1",
+    "eslint": "^9.10.0",
+    "prettier": "^3.3.3"
   }
 }

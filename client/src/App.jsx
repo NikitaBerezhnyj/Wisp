@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
 import Feed from "./components/Feed";
@@ -10,50 +13,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Base.css";
 
 function App() {
-  const [activeComponent, setActiveComponent] = useState("Feed");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authMode, setAuthMode] = useState("signIn");
-
-  const renderComponent = () => {
-    switch (activeComponent) {
-      case "Feed":
-        return <Feed />;
-      case "Profile":
-        return <Profile />;
-      case "Search":
-        return <Search />;
-      default:
-        return <Feed />;
-    }
-  };
-
-  const renderAuthentication = () => {
-    return authMode === "signIn" ? (
-      <SignIn
-        onSignIn={() => setIsAuthenticated(true)}
-        onSwitchToSignUp={() => setAuthMode("signUp")}
-      />
-    ) : (
-      <SignUp
-        onSignUp={() => setIsAuthenticated(true)}
-        onSwitchToSignIn={() => setAuthMode("signIn")}
-      />
-    );
-  };
+  const location = useLocation();
+  const user = localStorage.getItem("token");
 
   return (
     <>
-      {isAuthenticated ? (
+      {user ? ( // Якщо токен є, показуємо основні сторінки
         <>
           <Header />
-          <Navigation
-            setActiveComponent={setActiveComponent}
-            activeComponent={activeComponent}
-          />
-          <div className="content-container">{renderComponent()}</div>
+          <Navigation currentPath={location.pathname} />
+          <div className="content-container">
+            <Routes>
+              <Route path="/" element={<Feed />} />
+              <Route path="/profile/:username" element={<Profile />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </div>
         </>
       ) : (
-        <>{renderAuthentication()}</>
+        // Якщо токена немає, перенаправляємо на сторінку логіну/реєстрації
+        <Routes>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
       )}
     </>
   );

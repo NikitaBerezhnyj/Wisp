@@ -9,7 +9,7 @@ export default function Header() {
         onClick={() => {
           window.scrollTo({
             top: 0,
-            behavior: "smooth",
+            behavior: "smooth"
           });
         }}
       >

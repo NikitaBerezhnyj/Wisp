@@ -1,79 +1,79 @@
 @import url("../Colors.css");
 
 .comment-form-container {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--color-form-background);
-    border: 1px solid var(--color-form-border);
-    border-radius: 20px;
-    padding: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-form-background);
+  border: 1px solid var(--color-form-border);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 20px auto;
 }
 
 .comment-form-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .comment-form-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    margin-right: 8px;
-    border: 2px solid var(--color-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 8px;
+  border: 2px solid var(--color-secondary);
 }
 
 .comment-form-body {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .comment-form-textarea {
-    flex: 1;
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-    font-size: 14px;
-    resize: none;
-    background-color: var(--color-post-background);
-    color: var(--color-text);
-    outline: none;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    margin-right: 4px;
-    margin-bottom: 0;
-    width: 100%;
+  flex: 1;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  background-color: var(--color-post-background);
+  color: var(--color-text);
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-right: 4px;
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .comment-form-textarea:focus {
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .comment-form-submit-button {
-    background-color: var(--color-button-primary);
-    border: none;
-    color: var(--color-button-text);
-    padding: 8px 12px;
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
+  background-color: var(--color-button-primary);
+  border: none;
+  color: var(--color-button-text);
+  padding: 8px 12px;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .comment-form-submit-button:hover {
-    background-color: var(--color-hover);
+  background-color: var(--color-hover);
 }
 
 .comment-form-submit-button:active {
-    background-color: var(--color-active);
+  background-color: var(--color-active);
 }
 
 .comment-form-submit-button:disabled {
-    background-color: var(--color-disabled);
-    cursor: auto;
+  background-color: var(--color-disabled);
+  cursor: auto;
 }

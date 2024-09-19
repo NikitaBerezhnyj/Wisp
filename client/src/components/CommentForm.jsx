@@ -108,7 +108,7 @@ import "../styles/components/CommentForm.css";
 export default function CommentForm() {
   const [text, setText] = useState("");
 
-  const handleTextChange = (e) => {
+  const handleTextChange = e => {
     const { value } = e.target;
     if (value.length <= 256) {
       setText(value);

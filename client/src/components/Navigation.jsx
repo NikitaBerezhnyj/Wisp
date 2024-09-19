@@ -9,14 +9,14 @@ import { ImExit } from "react-icons/im";
 import ReportBox from "./ReportBox";
 import "../styles/components/Navigation.css";
 
-export default function Navigation({ setActiveComponent, activeComponent }) {
+export default function Navigation({ currentPath }) {
   const [activeDarkTheme, setActiveDarkTheme] = useState(true);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showReportBox, setShowReportBox] = useState(false);
   const moreMenuRef = useRef(null);
   const moreButtonRef = useRef(null);
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (
       moreMenuRef.current &&
       !moreMenuRef.current.contains(event.target) &&
@@ -25,6 +25,12 @@ export default function Navigation({ setActiveComponent, activeComponent }) {
     ) {
       setShowMoreMenu(false);
     }
+  };
+
+  // Вихід з системи
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -43,22 +49,22 @@ export default function Navigation({ setActiveComponent, activeComponent }) {
     <div className="navigation-container">
       <div className="navigation-items">
         <button
-          className={activeComponent === "Search" ? "active" : ""}
-          onClick={() => setActiveComponent("Search")}
+          className={currentPath === "/search" ? "active" : ""}
+          onClick={() => (window.location.pathname = "/search")}
         >
           <FaSearch />
           <span>Search</span>
         </button>
         <button
-          className={activeComponent === "Feed" ? "active" : ""}
-          onClick={() => setActiveComponent("Feed")}
+          className={currentPath === "/" ? "active" : ""}
+          onClick={() => (window.location.pathname = "/")}
         >
           <FaHome />
           <span>Home</span>
         </button>
         <button
-          className={activeComponent === "Profile" ? "active" : ""}
-          onClick={() => setActiveComponent("Profile")}
+          className={currentPath.startsWith("/profile") ? "active" : ""}
+          onClick={() => (window.location.pathname = "/profile")}
         >
           <FaRegUser />
           <span>Profile</span>
@@ -92,7 +98,11 @@ export default function Navigation({ setActiveComponent, activeComponent }) {
               <IoMdBug /> Report a Problem
             </button>
             <hr />
-            <button>
+            <button
+              onClick={() => {
+                handleLogout();
+              }}
+            >
               <ImExit /> SingOut
             </button>
           </div>
