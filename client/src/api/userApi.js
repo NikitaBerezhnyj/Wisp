@@ -61,3 +61,47 @@ export const reportFromUser = async reportData => {
     console.error("Error sending report:", error);
   }
 };
+
+// Функція для отримання даних профілю користувача
+export const getUserProfile = async username => {
+  try {
+    const response = await axios.get(`${API_URL}/profile/${username}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(
+      "Error in getUserProfile:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
+// // Функція для отримання даних профілю користувача
+// export const getSearchedUser = async searchPrompt => {
+//   try {
+//     const response = await axios.post(`${API_URL}/search`, searchPrompt);
+//     return response.data;
+//   } catch (error) {
+//     console.error(
+//       "Error in getSearchedUser:",
+//       error.response ? error.response.data : error.message
+//     );
+//     throw error;
+//   }
+// };
+
+// Функція для отримання даних пошуку користувачів
+export const getSearchedUser = async searchPrompt => {
+  try {
+    const response = await axios.get(`${API_URL}/search`, {
+      params: { searchPrompt } // Додаємо параметри запиту
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in getSearchedUser:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};

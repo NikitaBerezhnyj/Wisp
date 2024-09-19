@@ -4,15 +4,24 @@ const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true }
+  username: { type: String, required: true, unique: true, trim: true },
+  email: { type: String, required: true, unique: true, trim: true },
+  password: { type: String, required: true },
+  about: { type: String, trim: true },
+  avatarImage: { type: String, trim: true },
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  createdAt: { type: Date, default: Date.now }
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, process.env.JWT_PRIVATE_TOKEN, {
-    expiresIn: "7d"
-  });
+  const token = jwt.sign(
+    { _id: this._id, username: this.username },
+    process.env.JWT_PRIVATE_TOKEN,
+    {
+      expiresIn: "7d"
+    }
+  );
   return token;
 };
 

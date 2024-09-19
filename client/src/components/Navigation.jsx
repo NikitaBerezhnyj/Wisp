@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import { FaHome, FaSearch, FaRegUser } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdSettings } from "react-icons/io";
@@ -15,6 +17,7 @@ export default function Navigation({ currentPath }) {
   const [showReportBox, setShowReportBox] = useState(false);
   const moreMenuRef = useRef(null);
   const moreButtonRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleClickOutside = event => {
     if (
@@ -31,6 +34,22 @@ export default function Navigation({ currentPath }) {
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
+  };
+
+  // Отримання імені користувача з токена
+  // const getUsernameFromToken = () => {
+  //   const token = localStorage.getItem("token");
+  //   const decoded = jwtDecode(token);
+  //   console.log("Decode:");
+  //   console.log(decoded);
+  // };
+  const getUsernameFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      return decoded.username; // Замість цього використовуйте ключ, який відповідає імені користувача в токені
+    }
+    return null;
   };
 
   useEffect(() => {
@@ -50,21 +69,32 @@ export default function Navigation({ currentPath }) {
       <div className="navigation-items">
         <button
           className={currentPath === "/search" ? "active" : ""}
-          onClick={() => (window.location.pathname = "/search")}
+          // onClick={() => (window.location.pathname = "/search")}
+          onClick={() => navigate("/search")}
         >
           <FaSearch />
           <span>Search</span>
         </button>
         <button
           className={currentPath === "/" ? "active" : ""}
-          onClick={() => (window.location.pathname = "/")}
+          // onClick={() => (window.location.pathname = "/")}
+          onClick={() => navigate("/")}
         >
           <FaHome />
           <span>Home</span>
         </button>
         <button
           className={currentPath.startsWith("/profile") ? "active" : ""}
-          onClick={() => (window.location.pathname = "/profile")}
+          // onClick={() => (window.location.pathname = "/profile")}
+          onClick={() => {
+            const username = getUsernameFromToken();
+            if (username) {
+              navigate(`/profile/${username}`);
+            } else {
+              // handle case when username is not found
+              console.error("Username not found in token");
+            }
+          }}
         >
           <FaRegUser />
           <span>Profile</span>

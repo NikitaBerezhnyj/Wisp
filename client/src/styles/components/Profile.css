@@ -115,9 +115,15 @@
   margin-top: 20px;
 }
 
-.profile-posts h3 {
+.profile-posts h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.profile-posts h3 {
+  text-align: center;
+  margin: auto;
+  color: var(--color-disabled);
 }
 
 /* Додаємо трохи адаптивності */

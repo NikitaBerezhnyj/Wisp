@@ -1,0 +1,39 @@
+@import url('../Colors.css');
+
+.search-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--color-profile-border);
+    border-radius: 8px;
+    background-color: var(--color-profile-background);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.search-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.search-card .user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-card .user-info p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-text);
+}
+
+.search-card .user-info p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--color-primary);
+    /* Колір для імені користувача */
+}

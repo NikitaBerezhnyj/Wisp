@@ -25,11 +25,17 @@ exports.registerUser = async (req, res) => {
     if (error)
       return res.status(400).send({ message: error.details[0].message });
 
-    const user = await User.findOne({ email: req.body.email });
-    if (user)
+    const userEmail = await User.findOne({ email: req.body.email });
+    if (userEmail)
       return res
         .status(409)
         .send({ message: "User with given email already exists!" });
+
+    const userUsername = await User.findOne({ username: req.body.username });
+    if (userUsername)
+      return res
+        .status(409)
+        .send({ message: "User with given username already exists!" });
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
@@ -152,5 +158,72 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.error("Error resetting password:", error);
     res.status(500).json({ message: "Error resetting password" });
+  }
+};
+
+// Отримання інформації про користувача для профілю з бази даних
+exports.getUserProfileInfo = async (req, res) => {
+  try {
+    const username = req.params.username;
+    const user = await User.findOne({ username }).select(
+      "username about posts followers following avatarImage"
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const userInfo = {
+      username: user.username,
+      about: user.about || "",
+      postsCount: user.posts ? user.posts.length : 0,
+      followersCount: user.followers.length,
+      followingCount: user.following.length,
+      avatarImage: user.avatarImage || null
+    };
+
+    res.status(200).send({
+      data: userInfo,
+      message: "User info sent successfully"
+    });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Отримання інформації про користувача для пошуку з бази даних
+exports.getUserSearchInfo = async (req, res) => {
+  const { searchPrompt } = req.query;
+
+  if (!searchPrompt) {
+    return res.status(400).json({ message: "Search prompt is required" });
+  }
+
+  try {
+    // Шукаємо користувачів незалежно від регістру
+    let users = await User.find({
+      username: { $regex: searchPrompt, $options: "i" }
+    })
+      .select("username followers avatarImage")
+      .exec();
+
+    // Спочатку точні збіги за регістром
+    const exactMatches = users.filter(user =>
+      user.username.startsWith(searchPrompt)
+    );
+
+    // Потім часткові збіги незалежно від регістру
+    const partialMatches = users.filter(
+      user => !user.username.startsWith(searchPrompt)
+    );
+
+    // Об'єднуємо результати: спочатку точні збіги за регістром, потім інші
+    const sortedUsers = [...exactMatches, ...partialMatches];
+
+    res.status(200).json(sortedUsers);
+  } catch (error) {
+    console.error("Error fetching user search info:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

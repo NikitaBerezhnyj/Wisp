@@ -175,9 +175,10 @@ export default function SignIn() {
       try {
         const userData = { email, password };
         const res = await loginUser(userData);
-        localStorage.setItem("token", res.token);
+        localStorage.setItem("token", res.data);
         window.location.reload();
         console.log(res.message);
+        console.log("Token: " + res.data);
       } catch (error) {
         if (
           error.response &&
