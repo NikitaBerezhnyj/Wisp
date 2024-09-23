@@ -3,41 +3,41 @@
   /* Основні кольори */
   --color-background: #121212;
   /* Темний фон */
-  --color-text: #e0e0e0;
+  --color-text: #E0E0E0;
   /* Світло-сірий текст для контрасту */
-  --color-primary: #4caf50;
-  /* Зелений акцентний колір */
-  --color-secondary: #616161;
-  /* Темно-сірий для вторинних елементів */
-  --color-success: #81c784;
+  --color-primary: #87CEEB;
+  /* М'який блакитний акцентний колір */
+  --color-secondary: #B0BEC5;
+  /* Світло-сірий для вторинних елементів */
+  --color-success: #A5D6A7;
   /* Світло-зелений для успішних станів */
-  --color-danger: #e57373;
+  --color-danger: #EF9A9A;
   /* Світло-червоний для помилок */
-  --color-warning: #ffd54f;
+  --color-warning: #FFE57F;
   /* Світло-жовтий для попереджень */
-  --color-info: #4fc3f7;
+  --color-info: #80DEEA;
   /* Світло-бірюзовий для інформації */
-  --color-light: #333333;
-  /* Темний для світлих елементів */
-  --color-dark: #000000;
-  /* Дуже темний текст */
+  --color-light: #FFFFFF;
+  /* Білий для світлих елементів */
+  --color-dark: #B0BEC5;
+  /* Світло-сірий текст для темної теми */
 
   /* Колірні стани */
-  --color-hover: #3e8e41;
-  /* Темніший зелений для hover */
-  --color-active: #2c6b2f;
-  /* Ще темніший зелений для active */
+  --color-hover: #6EC6E8;
+  /* Темніший блакитний для hover */
+  --color-active: #5DB8DB;
+  /* Ще темніший блакитний для active */
   --color-disabled: #424242;
   /* Темно-сірий для неактивних елементів */
 
   /* Колір фону для постів */
-  --color-post-background: #1f1f1f;
-  /* Ще темніший фон для постів */
+  --color-post-background: #1E1E1E;
+  /* Темний фон для постів */
   --color-post-border: #333333;
   /* Темно-сірий для бордерів постів */
 
   /* Колір фону для профілю */
-  --color-profile-background: #1c1c1c;
+  --color-profile-background: #1C1C1C;
   /* Темний фон для профілю */
   --color-profile-border: #333333;
   /* Темно-сірий для бордерів профілю */
@@ -49,84 +49,85 @@
   /* Темно-сірий для бордерів форм */
 
   /* Колір фону для кнопок */
-  --color-button-primary: #4caf50;
+  --color-button-primary: #87CEEB;
   /* Основна кнопка */
-  --color-button-secondary: #616161;
+  --color-button-secondary: #B0BEC5;
   /* Вторинна кнопка */
-  --color-button-text: #e0e0e0;
-  /* Світлий текст на кнопках */
+  --color-button-text: #E0E0E0;
+  /* Світло-сірий текст на кнопках */
 
   /* Колір тексту для постів */
-  --color-post-text: #e0e0e0;
+  --color-post-text: #E0E0E0;
   /* Світло-сірий для тексту постів */
 
   /* Колір фону для сайдбарів */
-  --color-sidebar-background: #1e1e1e;
+  --color-sidebar-background: #121212;
   /* Темний фон для сайдбарів */
 }
 
+
 .light-theme {
   /* Основні кольори */
-  --color-background: #ffffff;
-  /* Світлий фон */
+  --color-background: #F5F5F5;
+  /* Світло-сірий фон */
   --color-text: #333333;
-  /* Темний текст для контрасту */
-  --color-primary: #388e3c;
-  /* Темніший зелений акцентний колір */
-  --color-secondary: #9e9e9e;
+  /* Темно-сірий текст для контрасту */
+  --color-primary: #87CEEB;
+  /* М'який блакитний акцентний колір */
+  --color-secondary: #B0BEC5;
   /* Світло-сірий для вторинних елементів */
-  --color-success: #66bb6a;
-  /* Яскраво-зелений для успішних станів */
-  --color-danger: #ef5350;
-  /* Яскраво-червоний для помилок */
-  --color-warning: #ffeb3b;
-  /* Яскраво-жовтий для попереджень */
-  --color-info: #29b6f6;
-  /* Яскраво-блакитний для інформації */
-  --color-light: #f0f0f0;
-  /* Світлий для світлих елементів */
+  --color-success: #A5D6A7;
+  /* Світло-зелений для успішних станів */
+  --color-danger: #EF9A9A;
+  /* Світло-червоний для помилок */
+  --color-warning: #FFE57F;
+  /* Світло-жовтий для попереджень */
+  --color-info: #80DEEA;
+  /* Світло-бірюзовий для інформації */
+  --color-light: #FFFFFF;
+  /* Білий для світлих елементів */
   --color-dark: #212121;
-  /* Темний текст */
+  /* Дуже темний текст */
 
   /* Колірні стани */
-  --color-hover: #4caf50;
-  /* Світліший зелений для hover */
-  --color-active: #388e3c;
-  /* Темно-зелений для active */
-  --color-disabled: #bdbdbd;
+  --color-hover: #6EC6E8;
+  /* Темніший блакитний для hover */
+  --color-active: #5DB8DB;
+  /* Ще темніший блакитний для active */
+  --color-disabled: #B0BEC5;
   /* Світло-сірий для неактивних елементів */
 
   /* Колір фону для постів */
-  --color-post-background: #f5f5f5;
-  /* Світлий фон для постів */
-  --color-post-border: #e0e0e0;
+  --color-post-background: #FFFFFF;
+  /* Білий фон для постів */
+  --color-post-border: #E0E0E0;
   /* Світло-сірий для бордерів постів */
 
   /* Колір фону для профілю */
-  --color-profile-background: #eeeeee;
-  /* Світлий фон для профілю */
-  --color-profile-border: #e0e0e0;
+  --color-profile-background: #F5F5F5;
+  /* Світло-сірий фон для профілю */
+  --color-profile-border: #E0E0E0;
   /* Світло-сірий для бордерів профілю */
 
   /* Колір фону для форм */
-  --color-form-background: #f9f9f9;
-  /* Світлий фон для форм */
-  --color-form-border: #e0e0e0;
+  --color-form-background: #FFFFFF;
+  /* Білий фон для форм */
+  --color-form-border: #E0E0E0;
   /* Світло-сірий для бордерів форм */
 
   /* Колір фону для кнопок */
-  --color-button-primary: #388e3c;
+  --color-button-primary: #87CEEB;
   /* Основна кнопка */
-  --color-button-secondary: #9e9e9e;
+  --color-button-secondary: #B0BEC5;
   /* Вторинна кнопка */
-  --color-button-text: #ffffff;
-  /* Темний текст на кнопках */
+  --color-button-text: #333333;
+  /* Темно-сірий текст на кнопках */
 
   /* Колір тексту для постів */
   --color-post-text: #333333;
-  /* Темний текст для постів */
+  /* Темно-сірий для тексту постів */
 
   /* Колір фону для сайдбарів */
-  --color-sidebar-background: #f0f0f0;
-  /* Світлий фон для сайдбарів */
+  --color-sidebar-background: #F5F5F5;
+  /* Світло-сірий фон для сайдбарів */
 }

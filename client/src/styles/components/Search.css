@@ -1,12 +1,5 @@
-/* @import url("../Colors.css");
-
-.search-container {
-    max-width: 600px;
-    margin: auto;
-} */
-
-/* Search.css */
 @import url("../Colors.css");
+@import url("../Spacing.css");
 
 .search-container {
     max-width: 600px;
@@ -22,7 +15,6 @@
 
 .search-input-container {
     display: flex;
-    /* border: 1px solid var(--color-form-border); */
     border-radius: 5px;
     overflow: hidden;
 }
@@ -30,28 +22,3 @@
 .search-button {
     height: fit-content;
 }
-
-/* .search-input {
-    flex: 1;
-    border: none;
-    background-color: var(--color-form-background);
-    color: var(--color-text);
-    outline: none;
-}
-
-.search-button {
-    background-color: var(--color-button-primary);
-    color: var(--color-button-text);
-    border: none;
-    border-radius: 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
-    background-color: var(--color-hover);
-}
-
-.search-button:active {
-    background-color: var(--color-active);
-} */

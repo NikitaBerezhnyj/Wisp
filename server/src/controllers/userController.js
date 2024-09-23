@@ -1,6 +1,9 @@
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const fs = require("fs");
+const { validateMIMEType } = require("validate-image-type");
 const {
   User,
   validateRegistration,
@@ -174,6 +177,7 @@ exports.getUserProfileInfo = async (req, res) => {
     }
 
     const userInfo = {
+      id: user._id,
       username: user.username,
       about: user.about || "",
       postsCount: user.posts ? user.posts.length : 0,
@@ -225,5 +229,59 @@ exports.getUserSearchInfo = async (req, res) => {
   } catch (error) {
     console.error("Error fetching user search info:", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Редагування профілю користувача
+exports.editUserProfile = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const updatedData = req.body; // Отримуємо оновлені дані з тіла запиту
+
+    const user = await User.findOneAndUpdate(
+      { username },
+      updatedData, // Оновлюємо дані користувача
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      data: user
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Завантаження файлів на сервер
+exports.saveUploadedFile = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No file uploaded");
+  }
+
+  // Перевірка MIME-типу файлу
+  try {
+    const validationResult = await validateMIMEType(req.file.path, {
+      originalFilename: req.file.originalname,
+      allowMimeTypes: ["image/jpeg", "image/gif", "image/png", "image/svg+xml"]
+    });
+
+    if (!validationResult.ok) {
+      // Якщо перевірка не пройшла, видаляємо файл і повертаємо помилку
+      fs.unlinkSync(req.file.path); // Видаляємо завантажений файл
+      return res.status(400).send("Unsupported file type.");
+    }
+
+    // Якщо файл підтримується, повертаємо його шлях
+    return res.status(200).json({
+      filePath: `http://${process.env.HOSTNAME}:${process.env.PORT}/uploads/${req.file.filename}`
+    });
+  } catch (error) {
+    return res.status(500).send("Error processing file.");
   }
 };

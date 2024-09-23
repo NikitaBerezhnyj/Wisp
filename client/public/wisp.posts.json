@@ -1,0 +1,38 @@
+[
+  {
+    "_id": {
+      "$oid": "66f103a7ceb71bdd39017dc0"
+    },
+    "user": {
+      "$oid": "66ebf7cf13638b78d58b0b2a",
+      "avatar": "http://localhost:3001/uploads/portrait_2024-09-23_08-59-48.jpg",
+      "username": "NikName"
+    },
+    "content": "<u>Це перший пост!</u>",
+    "postImage": "",
+    "likes": [],
+    "dislikes": [],
+    "comments": [],
+    "createdAt": {
+      "$date": "2024-09-23T05:59:03.414Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66f103d5ceb71bdd39017dc2"
+    },
+    "user": {
+      "$oid": "66ebf7cf13638b78d58b0b2a"
+    },
+    "content": "Це перший пост із зображенням",
+    "postImage": "http://localhost:3001/uploads/portrait_2024-09-23_08-59-48.jpg",
+    "likes": [],
+    "dislikes": [],
+    "comments": [],
+    "createdAt": {
+      "$date": "2024-09-23T05:59:49.701Z"
+    },
+    "__v": 0
+  }
+]

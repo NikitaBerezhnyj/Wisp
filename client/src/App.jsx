@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import Feed from "./components/Feed";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
+import Settings from "./components/Settings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Base.css";
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" element={<Feed />} />
               <Route path="/profile/:username" element={<Profile />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>

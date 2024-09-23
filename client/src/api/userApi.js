@@ -23,10 +23,58 @@ export const loginUser = async credentials => {
   }
 };
 
+// Функція для отримання даних пошуку користувачів
+export const getSearchedUser = async searchPrompt => {
+  try {
+    const response = await axios.get(`${API_URL}/search`, {
+      params: { searchPrompt } // Додаємо параметри запиту
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in getSearchedUser:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
+// Функція для отримання даних профілю користувача
+export const getUserProfile = async username => {
+  try {
+    const response = await axios.get(`${API_URL}/profile/${username}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(
+      "Error in getUserProfile:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
+// Оновлення інформації про користувача (about та avatar)
+export const updateUserProfile = async updatedProfile => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/profile/${updatedProfile.currentUsername}/edit`,
+      updatedProfile
+    );
+    console.log("User data update has been successfully");
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error updating user data:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
 // Функція для надсилання листа з скиданням пароля
 export const sendPasswordResetEmail = async email => {
   try {
-    const response = await axios.post(`${API_URL}/forgot-password`, {
+    const response = await axios.post(`${API_URL}/password/change`, {
       email
     });
     console.log("Email for reset password sent successfully");
@@ -43,7 +91,7 @@ export const sendPasswordResetEmail = async email => {
 // Функція для скидання пароля
 export const resetPassword = async (token, newPassword) => {
   try {
-    const response = await axios.post(`${API_URL}/reset-password/${token}`, {
+    const response = await axios.post(`${API_URL}/password/reset/${token}`, {
       password: newPassword
     });
     return response.data; // Наприклад, підтвердження, що пароль змінено
@@ -62,46 +110,32 @@ export const reportFromUser = async reportData => {
   }
 };
 
-// Функція для отримання даних профілю користувача
-export const getUserProfile = async username => {
-  try {
-    const response = await axios.get(`${API_URL}/profile/${username}`);
-    return response.data.data;
-  } catch (error) {
-    console.error(
-      "Error in getUserProfile:",
-      error.response ? error.response.data : error.message
-    );
-    throw error;
-  }
-};
-
-// // Функція для отримання даних профілю користувача
-// export const getSearchedUser = async searchPrompt => {
+// export const saveUploadFile = async selectedFile => {
 //   try {
-//     const response = await axios.post(`${API_URL}/search`, searchPrompt);
+//     const response = await axios.put(`${API_URL}/upload`, selectedFile);
+//     console.log("Upload file save successfully");
 //     return response.data;
 //   } catch (error) {
-//     console.error(
-//       "Error in getSearchedUser:",
-//       error.response ? error.response.data : error.message
-//     );
-//     throw error;
+//     console.error("Error saving upload file:", error);
 //   }
 // };
 
-// Функція для отримання даних пошуку користувачів
-export const getSearchedUser = async searchPrompt => {
+export const saveUploadFile = async selectedFile => {
   try {
-    const response = await axios.get(`${API_URL}/search`, {
-      params: { searchPrompt } // Додаємо параметри запиту
+    // Створюємо об'єкт FormData
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    // Виконуємо PUT запит з використанням FormData
+    const response = await axios.post(`${API_URL}/upload`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
     });
+
+    console.log("Upload file saved successfully");
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in getSearchedUser:",
-      error.response ? error.response.data : error.message
-    );
-    throw error;
+    console.error("Error saving upload file:", error);
   }
 };

@@ -1,6 +1,6 @@
 @import url("../Colors.css");
+@import url("../Spacing.css");
 
-/* Основний контейнер профілю */
 .profile {
   margin-top: 20px;
 }
@@ -21,7 +21,6 @@
   flex-wrap: wrap;
 }
 
-/* Аватар користувача */
 .profile-avatar-container {
   display: flex;
   justify-content: center;
@@ -34,7 +33,6 @@
   border: 3px solid var(--color-secondary);
 }
 
-/* Інформація про користувача */
 .profile-details {
   display: flex;
   flex-direction: column;
@@ -47,7 +45,6 @@
   margin-bottom: 10px;
 }
 
-/* Статистика профілю */
 .profile-stats {
   display: flex;
   gap: 15px;
@@ -60,14 +57,12 @@
   text-align: center;
 }
 
-/* Про користувача */
 .profile-about p {
   font-size: 14px;
   color: var(--color-secondary);
   margin-top: 10px;
 }
 
-/* Дії профілю */
 .profile-actions {
   margin-top: 10px;
   height: 128px;
@@ -109,7 +104,6 @@
   background-color: var(--color-active);
 }
 
-/* Секція постів */
 .profile-posts {
   width: 100%;
   margin-top: 20px;
@@ -126,7 +120,6 @@
   color: var(--color-disabled);
 }
 
-/* Додаємо трохи адаптивності */
 @media (max-width: 720px) {
   .profile-header {
     flex-direction: column;

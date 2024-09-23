@@ -1,4 +1,5 @@
 @import url("../Colors.css");
+@import url("../Spacing.css");
 
 .header {
   height: 56px;
@@ -19,4 +20,6 @@
 
 .navbar-brand img {
   margin-right: 8px;
+  width: 32px;
+  height: 32px;
 }

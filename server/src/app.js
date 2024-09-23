@@ -6,6 +6,7 @@ const cors = require("cors");
 // Підключення власних рішень
 const connection = require("./database");
 const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 // Створення екземпляра Express
 const app = express();
@@ -35,6 +36,10 @@ connection();
 
 // Налаштування маршрутизації API
 app.use("/api", userRoutes);
+app.use("/api", postRoutes);
+
+// Роздача файлів з теки uploads
+app.use("/uploads", express.static("uploads"));
 
 // Запуск сервера
 app.listen(PORT, HOSTNAME, () => {

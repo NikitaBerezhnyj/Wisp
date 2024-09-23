@@ -1,16 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const upload = require("../middleware/uploadMiddleware");
 
 // Post запити
 router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);
+router.post("/password/change", userController.forgotPassword);
+router.post("/password/reset/:token", userController.resetPassword);
 router.post("/send-report", userController.sendErrorReport);
-router.post("/forgot-password", userController.forgotPassword);
-router.post("/reset-password/:token", userController.resetPassword);
 // Get запити
-router.get("/profile/:username", userController.getUserProfileInfo);
-// router.post("/search", userController.getUserSearchInfo);
 router.get("/search", userController.getUserSearchInfo);
+router.get("/profile/:username", userController.getUserProfileInfo);
+// Put запити
+router.put("/profile/:username/edit", userController.editUserProfile);
+
+// Завантаження файлів на сервер
+router.post("/upload", upload.single("file"), userController.saveUploadedFile);
 
 module.exports = router;

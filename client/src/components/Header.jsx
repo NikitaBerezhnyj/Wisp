@@ -13,7 +13,8 @@ export default function Header() {
           });
         }}
       >
-        <img src="/wisp.svg" alt="logo" />
+        {/* <img src="/wisp.svg" alt="logo" /> */}
+        <img src="/img/logo.png" alt="logo" />
         <h1>Wisp</h1>
       </Navbar.Brand>
     </Container>
