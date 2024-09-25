@@ -18,7 +18,7 @@ function App() {
   const user = localStorage.getItem("token");
 
   return (
-    <>
+    <div className="App">
       {user ? ( // Якщо токен є, показуємо основні сторінки
         <>
           <Header />
@@ -43,7 +43,7 @@ function App() {
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}
-    </>
+    </div>
   );
 }
 

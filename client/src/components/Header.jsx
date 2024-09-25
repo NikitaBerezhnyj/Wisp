@@ -1,16 +1,15 @@
 import React from "react";
 import { Container, Navbar } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "../styles/components/Header.css";
 
 export default function Header() {
+  const navigate = useNavigate();
   return (
     <Container fluid className="header">
       <Navbar.Brand
         onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
+          navigate("/");
         }}
       >
         {/* <img src="/wisp.svg" alt="logo" /> */}

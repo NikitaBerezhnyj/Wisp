@@ -4,7 +4,8 @@
 body {
   font-family: "Roboto", sans-serif;
   font-style: normal;
-  background-color: var(--color-background);
+  /* background-color: var(--color-background); */
+  background-image: url('../../public/img/background.jpg');
   color: var(--color-text);
   margin: 0;
   padding: 0;
@@ -180,7 +181,7 @@ select:focus {
 
 .content-container {
   margin-left: 360px;
-  margin-top: 90px;
+  margin-top: 56px;
   padding: 8px;
 }
 

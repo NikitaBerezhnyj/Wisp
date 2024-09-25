@@ -128,39 +128,28 @@
   cursor: not-allowed;
 }
 
-.emoji-picker {
-  background-color: var(--color-form-background);
-  border: 1px solid var(--color-form-border);
-  border-radius: 8px;
-  padding: 10px;
+.emoji-picker-container {
   position: absolute;
-  z-index: 10;
-  max-height: 300px;
-  max-width: 300px;
+  z-index: 1000;
+  /* Забезпечує, щоб EmojiPicker був поверх інших елементів */
+  width: 300px;
+  /* Задаємо фіксовану ширину для EmojiPicker */
+  height: auto;
+  /* Автоматична висота для утримання всіх елементів */
+  max-height: 400px;
+  /* Максимальна висота */
   overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  /* Скролінг, якщо контент перевищує висоту */
 }
 
-.emoji-category {
-  margin-bottom: 10px;
+.emoji-picker-container .emoji-picker-react {
+  width: 100%;
+  /* Розтягуємо на всю ширину контейнера */
+  height: auto;
 }
 
-.emoji-category h4 {
-  color: var(--color-text);
-  margin-bottom: 5px;
-}
-
-.emoji {
-  cursor: pointer;
-  margin: 5px;
-  font-size: 16px;
-  transition: transform 0.2s;
-  display: inline-block;
-  text-align: center;
-}
-
-.emoji:hover {
-  transform: scale(1.2);
+#epr-category-nav-id {
+  display: none;
 }
 
 .post-form-selected-image {
@@ -190,6 +179,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .emoji-picker-container {
+    width: 100%;
+    /* На мобільних пристроях розтягуємо на всю ширину */
+    max-height: 200px;
+    /* Зменшуємо висоту для мобільних пристроїв */
+  }
 }
 
 

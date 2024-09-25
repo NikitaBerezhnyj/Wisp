@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { GrLike, GrDislike } from "react-icons/gr";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
 import CommentList from "./CommentList";
 import { likePost, dislikePost } from "../api/postApi";
 import "../styles/components/Post.css";
@@ -15,6 +16,9 @@ export default function Post({ post }) {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [posterId, setPosterId] = useState(null);
+  const [isAnotherUserPost, setIsAnotherUserPost] = useState(false);
   const navigate = useNavigate();
 
   const getIdFromToken = () => {
@@ -29,8 +33,15 @@ export default function Post({ post }) {
   useEffect(() => {
     const id = getIdFromToken();
     setUserId(id);
+    setPosterId(post.user._id);
     setLiked(post.likes.includes(id));
     setDisliked(post.dislikes.includes(id));
+
+    if (userId === posterId) {
+      setIsAnotherUserPost(true);
+    } else {
+      setIsAnotherUserPost(false);
+    }
   }, [post.likes, post.dislikes]);
 
   const handleLikeClick = () => {
@@ -49,6 +60,10 @@ export default function Post({ post }) {
       setLiked(false);
       setLikeCounter(likeCounter - 1);
     }
+  };
+
+  const handleMoreClick = () => {
+    setIsMoreOpen(!isMoreOpen);
   };
 
   const handleCommentsClick = () => {
@@ -90,26 +105,50 @@ export default function Post({ post }) {
           <img src={post.postImage} alt="Post" className="post-image" />
         )}
       </div>
-      <div className="post-actions">
-        <button
-          className={`post-action-button ${liked ? "active" : ""}`}
-          onClick={handleLikeClick}
-        >
-          <span>{likeCounter}</span>
-          <GrLike />
-        </button>
-        <button
-          className={`post-action-button ${disliked ? "active" : ""}`}
-          onClick={handleDislikeClick}
-        >
-          <span>{dislikeCounter}</span>
-          <GrDislike />
-        </button>
-        <button className="post-action-button" onClick={handleCommentsClick}>
-          <span>{commentsCounter}</span>
-          <FaRegCommentAlt />
-        </button>
+      <div className="post-actions-container">
+        <div className="post-actions">
+          <button
+            className={`post-action-button ${liked ? "active" : ""}`}
+            onClick={handleLikeClick}
+          >
+            <span>{likeCounter}</span>
+            <GrLike />
+          </button>
+          <button
+            className={`post-action-button ${disliked ? "active" : ""}`}
+            onClick={handleDislikeClick}
+          >
+            <span>{dislikeCounter}</span>
+            <GrDislike />
+          </button>
+          <button className="post-action-button" onClick={handleCommentsClick}>
+            <span>{commentsCounter}</span>
+            <FaRegCommentAlt />
+          </button>
+        </div>
+        <div className="post-actions">
+          <button
+            className={`post-action-button ${liked ? "active" : ""}`}
+            onClick={handleMoreClick}
+          >
+            <BsThreeDots />
+          </button>
+        </div>
       </div>
+      {isMoreOpen && (
+        <div className="post-more-action-container">
+          {isAnotherUserPost ? (
+            <>
+              <button>Edit Post</button>
+              <button>Delete Post</button>
+            </>
+          ) : (
+            <>
+              <button>Report</button>
+            </>
+          )}
+        </div>
+      )}
       {showComments && (
         <CommentList comments={post.comments} onClose={closeComments} />
       )}
