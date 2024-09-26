@@ -57,10 +57,31 @@ export const deletePost = async postId => {
   }
 };
 
+// // Функція для лайку посту
+// export const likePost = async postId => {
+//   try {
+//     const response = await axios.post(`${API_URL}/posts/${postId}/like`);
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// // Функція для дизлайку посту
+// export const dislikePost = async postId => {
+//   try {
+//     const response = await axios.post(`${API_URL}/posts/${postId}/dislike`);
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 // Функція для лайку посту
-export const likePost = async postId => {
+export const likePost = async (postId, userId) => {
   try {
-    const response = await axios.post(`${API_URL}/posts/${postId}/like`);
+    const response = await axios.post(`${API_URL}/posts/${postId}/like`, {
+      userId
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -68,9 +89,11 @@ export const likePost = async postId => {
 };
 
 // Функція для дизлайку посту
-export const dislikePost = async postId => {
+export const dislikePost = async (postId, userId) => {
   try {
-    const response = await axios.post(`${API_URL}/posts/${postId}/dislike`);
+    const response = await axios.post(`${API_URL}/posts/${postId}/dislike`, {
+      userId
+    });
     return response.data;
   } catch (error) {
     throw error;

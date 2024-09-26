@@ -4,8 +4,7 @@
 body {
   font-family: "Roboto", sans-serif;
   font-style: normal;
-  /* background-color: var(--color-background); */
-  background-image: url('../../public/img/background.jpg');
+  background-color: var(--color-background);
   color: var(--color-text);
   margin: 0;
   padding: 0;

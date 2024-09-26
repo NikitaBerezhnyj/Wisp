@@ -113,6 +113,14 @@
   margin-right: 10px;
 }
 
+.image-container {
+  background-image: url('../../../public/img/background(1).jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: hue-rotate(90deg);
+}
+
 .image-container img {
   max-width: 100%;
   height: auto;

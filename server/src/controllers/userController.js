@@ -181,7 +181,9 @@ exports.getUserProfileInfo = async (req, res) => {
       username: user.username,
       about: user.about || "",
       postsCount: user.posts ? user.posts.length : 0,
+      followers: user.followers || [],
       followersCount: user.followers.length,
+      following: user.following || [],
       followingCount: user.following.length,
       avatarImage: user.avatarImage || null
     };
@@ -193,6 +195,74 @@ exports.getUserProfileInfo = async (req, res) => {
   } catch (error) {
     console.error("Error fetching user profile:", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.followUser = async (req, res) => {
+  const { userId, followerId } = req.body; // Отримання ID з тіла запиту
+
+  try {
+    // Пошук обох користувачів
+    const user = await User.findById(userId);
+    const follower = await User.findById(followerId);
+
+    // Перевірка на існування користувачів
+    if (!user || !follower) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // Перевірка, чи користувач вже підписаний
+    if (user.followers.includes(followerId)) {
+      return res.status(400).send({ message: "Already following this user" });
+    }
+
+    // Додаємо підписника та того, на кого підписуються
+    user.followers.push(followerId);
+    follower.following.push(userId);
+
+    // Зберігаємо оновлених користувачів
+    await user.save();
+    await follower.save();
+
+    res.status(200).send({ message: "Successfully followed user" });
+  } catch (error) {
+    console.error("Error following user:", error);
+    res.status(500).send({ message: "Error following user" });
+  }
+};
+
+exports.unfollowUser = async (req, res) => {
+  const { userId, followerId } = req.body;
+
+  try {
+    // Пошук обох користувачів
+    const user = await User.findById(userId);
+    const follower = await User.findById(followerId);
+
+    // Перевірка на існування користувачів
+    if (!user || !follower) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // Перевірка, чи користувач уже підписаний
+    if (!user.followers.includes(followerId)) {
+      return res.status(400).send({ message: "Not following this user" });
+    }
+
+    // Видаляємо підписника та оновлюємо підписки
+    user.followers = user.followers.filter(id => id.toString() !== followerId);
+    follower.following = follower.following.filter(
+      id => id.toString() !== userId
+    );
+
+    // Зберігаємо оновлених користувачів
+    await user.save();
+    await follower.save();
+
+    res.status(200).send({ message: "Successfully unfollowed user" });
+  } catch (error) {
+    console.error("Error unfollowing user:", error);
+    res.status(500).send({ message: "Error unfollowing user" });
   }
 };
 

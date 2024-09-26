@@ -378,7 +378,7 @@ export default function SignUp() {
         </form>
       </div>
       <div className="image-container">
-        <img src="/img/boat.gif" alt="Decorative boat animation" />
+        {/* <img src="/img/boat.gif" alt="Decorative boat animation" /> */}
       </div>
     </div>
   );

@@ -31,14 +31,65 @@ exports.createPost = async (req, res) => {
   }
 };
 
+// // Лайк посту
+// exports.likePost = async (req, res) => {
+//   // Реалізувати код тут
+// };
+
+// // Дизлайк посту
+// exports.dislikePost = async (req, res) => {
+//   // Реалізувати код тут
+// };
 // Лайк посту
 exports.likePost = async (req, res) => {
-  // Реалізувати код тут
+  const userId = req.body.userId; // ID користувача, який лайкає пост
+  const postId = req.params.id; // ID поста
+
+  try {
+    const post = await Post.findById(postId);
+
+    // Якщо користувач вже лайкнув пост, видалити лайк
+    if (post.likes.includes(userId)) {
+      post.likes = post.likes.filter(id => id.toString() !== userId);
+    } else {
+      // Додати лайк до поста
+      post.likes.push(userId);
+      // Якщо пост вже дизлайкнувся, видалити дизлайк
+      post.dislikes = post.dislikes.filter(id => id.toString() !== userId);
+    }
+
+    await post.save();
+    res.status(200).send(post);
+  } catch (error) {
+    console.error("Error liking post:", error);
+    res.status(500).send({ message: "Error liking post" });
+  }
 };
 
 // Дизлайк посту
 exports.dislikePost = async (req, res) => {
-  // Реалізувати код тут
+  const userId = req.body.userId; // ID користувача, який дизлайкає пост
+  const postId = req.params.id; // ID поста
+
+  try {
+    const post = await Post.findById(postId);
+
+    // Якщо користувач вже дизлайкнув пост, видалити дизлайк
+    if (post.dislikes.includes(userId)) {
+      post.dislikes = post.dislikes.filter(id => id.toString() !== userId);
+    } else {
+      // Додати дизлайк до поста
+      post.dislikes.push(userId);
+      // Якщо пост вже лайкнувся, видалити лайк
+      post.likes = post.likes.filter(id => id.toString() !== userId);
+    }
+
+    await post.save();
+    res.status(200).send(post);
+  } catch (error) {
+    console.error("Error disliking post:", error);
+    res.status(500).send({ message: "Error disliking post" });
+  }
 };
 
 // Додавання коментаря до посту

@@ -269,7 +269,7 @@ export default function SignIn() {
         </form>
       </div>
       <div className="image-container">
-        <img src="/img/boat.gif" alt="Decorative boat animation" />
+        {/* <img src="/img/background.jpg" alt="Decorative boat animation" /> */}
       </div>
     </div>
   );

@@ -44,21 +44,48 @@ export default function Post({ post }) {
     }
   }, [post.likes, post.dislikes]);
 
-  const handleLikeClick = () => {
-    setLiked(!liked);
-    setLikeCounter(liked ? likeCounter - 1 : likeCounter + 1);
-    if (disliked) {
-      setDisliked(false);
-      setDislikeCounter(dislikeCounter - 1);
+  // const handleLikeClick = () => {
+  //   setLiked(!liked);
+  //   setLikeCounter(liked ? likeCounter - 1 : likeCounter + 1);
+  //   if (disliked) {
+  //     setDisliked(false);
+  //     setDislikeCounter(dislikeCounter - 1);
+  //   }
+  // };
+
+  // const handleDislikeClick = () => {
+  //   setDisliked(!disliked);
+  //   setDislikeCounter(disliked ? dislikeCounter - 1 : dislikeCounter + 1);
+  //   if (liked) {
+  //     setLiked(false);
+  //     setLikeCounter(likeCounter - 1);
+  //   }
+  // };
+  const handleLikeClick = async () => {
+    try {
+      await likePost(post._id, userId); // Відправка запиту на бекенд
+      setLiked(!liked);
+      setLikeCounter(liked ? likeCounter - 1 : likeCounter + 1);
+      if (disliked) {
+        setDisliked(false);
+        setDislikeCounter(dislikeCounter - 1);
+      }
+    } catch (error) {
+      console.error("Error liking post:", error);
     }
   };
 
-  const handleDislikeClick = () => {
-    setDisliked(!disliked);
-    setDislikeCounter(disliked ? dislikeCounter - 1 : dislikeCounter + 1);
-    if (liked) {
-      setLiked(false);
-      setLikeCounter(likeCounter - 1);
+  const handleDislikeClick = async () => {
+    try {
+      await dislikePost(post._id, userId); // Відправка запиту на бекенд
+      setDisliked(!disliked);
+      setDislikeCounter(disliked ? dislikeCounter - 1 : dislikeCounter + 1);
+      if (liked) {
+        setLiked(false);
+        setLikeCounter(likeCounter - 1);
+      }
+    } catch (error) {
+      console.error("Error disliking post:", error);
     }
   };
 

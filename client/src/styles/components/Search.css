@@ -2,6 +2,14 @@
 @import url("../Spacing.css");
 
 .search-container {
+    background-color: var(--color-background);
+    border-radius: 25px;
+    padding: 24px 0;
+    margin: 36px auto;
+    min-height: 85vh;
+}
+
+.search-wrap {
     max-width: 600px;
     margin: auto;
     padding: 20px;

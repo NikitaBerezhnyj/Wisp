@@ -71,6 +71,55 @@ export const updateUserProfile = async updatedProfile => {
   }
 };
 
+// // Функція для підписки на користувача
+// export const followUser = async userId => {
+//   try {
+//     const response = await axios.post(`${API_URL}/follow`, { userId });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error following user:", error);
+//     throw error;
+//   }
+// };
+
+// // Функція для відписки від користувача
+// export const unfollowUser = async userId => {
+//   try {
+//     const response = await axios.post(`${API_URL}/unfollow`, { userId });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error unfollowing user:", error);
+//     throw error;
+//   }
+// };
+// Функція для підписки на користувача
+export const followUser = async (userId, followerId) => {
+  try {
+    const response = await axios.post(`${API_URL}/follow`, {
+      userId,
+      followerId
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error following user:", error);
+    throw error;
+  }
+};
+
+// Функція для відписки від користувача
+export const unfollowUser = async (userId, followerId) => {
+  try {
+    const response = await axios.post(`${API_URL}/unfollow`, {
+      userId,
+      followerId
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error unfollowing user:", error);
+    throw error;
+  }
+};
+
 // Функція для надсилання листа з скиданням пароля
 export const sendPasswordResetEmail = async email => {
   try {

@@ -1,11 +1,15 @@
 @import url("../Colors.css");
 @import url("../Spacing.css");
 
-.profile {
-  margin-top: 20px;
+.profile-container {
+  background-color: var(--color-background);
+  border-radius: 25px;
+  padding: 24px 0;
+  margin: 36px auto;
+  min-height: 85vh;
 }
 
-.profile hr {
+.profile-container hr {
   max-width: 650px;
   margin: auto;
   margin-top: 20px;
@@ -81,7 +85,16 @@
 }
 
 .profile-button-follow {
+  display: flex;
+  align-items: center;
   background-color: var(--color-button-primary);
+}
+
+.profile-button-follow svg {
+  /* margin: 0;
+  padding: 0; */
+  margin-left: 8px;
+  margin-bottom: 2px;
 }
 
 .profile-button-follow:hover {
@@ -93,7 +106,14 @@
 }
 
 .profile-button-edit {
+  display: flex;
+  align-items: center;
   background-color: var(--color-button-secondary);
+}
+
+.profile-button-edit svg {
+  margin-left: 8px;
+  margin-bottom: 2px;
 }
 
 .profile-button-edit:hover {

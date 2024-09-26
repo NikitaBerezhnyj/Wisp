@@ -626,7 +626,11 @@ export default function PostForm() {
 
   const handleTextChange = e => {
     const { value } = e.target;
-    setText(value);
+    if (value.length <= 256) {
+      // Limit to 256 characters
+      setText(value);
+      setCharCount(value.length); // Update character count
+    }
   };
 
   const applyFormatting = type => {
