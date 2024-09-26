@@ -71,7 +71,29 @@ exports.dislikePost = async (req, res) => {
 };
 
 exports.addComment = async (req, res) => {
-  // Реалізувати код тут
+  const postId = req.params.id;
+  const { userId, commentData } = req.body;
+
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+
+    post.comments.push({
+      user: userId,
+      content: commentData,
+      createdAt: new Date()
+    });
+
+    await post.save();
+
+    res.status(200).send(post);
+  } catch (error) {
+    console.error("Error adding comment to post:", error);
+    res.status(500).send({ message: "Error adding comment to post" });
+  }
 };
 
 exports.getPosts = async (req, res) => {

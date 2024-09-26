@@ -10,6 +10,7 @@ router.post("/unfollow", userController.unfollowUser);
 router.post("/password/change", userController.forgotPassword);
 router.post("/password/reset/:token", userController.resetPassword);
 router.post("/send-report", userController.sendErrorReport);
+router.get("/user/:id", userController.getUserById);
 router.get("/search", userController.getUserSearchInfo);
 router.get("/profile/:username", userController.getUserProfileInfo);
 router.put("/profile/:username/edit", userController.editUserProfile);

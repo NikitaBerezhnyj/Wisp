@@ -12,7 +12,6 @@ const {
 } = require("../models/userModel");
 const ResetToken = require("../models/resetTokenModel");
 
-// Налаштування транспортеру для надсилання електронних листів
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -51,7 +50,6 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// Логін користувача
 exports.loginUser = async (req, res) => {
   try {
     const { error } = validateLogin(req.body);
@@ -79,7 +77,6 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Надсилання звіту про помилки
 exports.sendErrorReport = async (req, res) => {
   const { message } = req.body;
 
@@ -100,7 +97,6 @@ exports.sendErrorReport = async (req, res) => {
   }
 };
 
-// Забули пароль
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -125,7 +121,6 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// Скидання паролю
 exports.resetPassword = async (req, res) => {
   const { password } = req.body;
   const { token } = req.params;
@@ -164,7 +159,6 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// Отримання інформації про користувача для профілю з бази даних
 exports.getUserProfileInfo = async (req, res) => {
   try {
     const username = req.params.username;
@@ -198,29 +192,47 @@ exports.getUserProfileInfo = async (req, res) => {
   }
 };
 
-exports.followUser = async (req, res) => {
-  const { userId, followerId } = req.body; // Отримання ID з тіла запиту
+exports.getUserById = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    // Пошук обох користувачів
+    const user = await User.findById(id).select("username avatarImage");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      data: {
+        id: user._id,
+        username: user.username,
+        avatarImage: user.avatarImage
+      },
+      message: "User information retrieved successfully"
+    });
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.followUser = async (req, res) => {
+  const { userId, followerId } = req.body;
+
+  try {
     const user = await User.findById(userId);
     const follower = await User.findById(followerId);
 
-    // Перевірка на існування користувачів
     if (!user || !follower) {
       return res.status(404).send({ message: "User not found" });
     }
 
-    // Перевірка, чи користувач вже підписаний
     if (user.followers.includes(followerId)) {
       return res.status(400).send({ message: "Already following this user" });
     }
 
-    // Додаємо підписника та того, на кого підписуються
     user.followers.push(followerId);
     follower.following.push(userId);
 
-    // Зберігаємо оновлених користувачів
     await user.save();
     await follower.save();
 
@@ -235,27 +247,22 @@ exports.unfollowUser = async (req, res) => {
   const { userId, followerId } = req.body;
 
   try {
-    // Пошук обох користувачів
     const user = await User.findById(userId);
     const follower = await User.findById(followerId);
 
-    // Перевірка на існування користувачів
     if (!user || !follower) {
       return res.status(404).send({ message: "User not found" });
     }
 
-    // Перевірка, чи користувач уже підписаний
     if (!user.followers.includes(followerId)) {
       return res.status(400).send({ message: "Not following this user" });
     }
 
-    // Видаляємо підписника та оновлюємо підписки
     user.followers = user.followers.filter(id => id.toString() !== followerId);
     follower.following = follower.following.filter(
       id => id.toString() !== userId
     );
 
-    // Зберігаємо оновлених користувачів
     await user.save();
     await follower.save();
 
@@ -266,7 +273,6 @@ exports.unfollowUser = async (req, res) => {
   }
 };
 
-// Отримання інформації про користувача для пошуку з бази даних
 exports.getUserSearchInfo = async (req, res) => {
   const { searchPrompt } = req.query;
 
@@ -275,24 +281,20 @@ exports.getUserSearchInfo = async (req, res) => {
   }
 
   try {
-    // Шукаємо користувачів незалежно від регістру
     let users = await User.find({
       username: { $regex: searchPrompt, $options: "i" }
     })
       .select("username followers avatarImage")
       .exec();
 
-    // Спочатку точні збіги за регістром
     const exactMatches = users.filter(user =>
       user.username.startsWith(searchPrompt)
     );
 
-    // Потім часткові збіги незалежно від регістру
     const partialMatches = users.filter(
       user => !user.username.startsWith(searchPrompt)
     );
 
-    // Об'єднуємо результати: спочатку точні збіги за регістром, потім інші
     const sortedUsers = [...exactMatches, ...partialMatches];
 
     res.status(200).json(sortedUsers);
@@ -302,17 +304,14 @@ exports.getUserSearchInfo = async (req, res) => {
   }
 };
 
-// Редагування профілю користувача
 exports.editUserProfile = async (req, res) => {
   try {
     const { username } = req.params;
-    const updatedData = req.body; // Отримуємо оновлені дані з тіла запиту
+    const updatedData = req.body;
 
-    const user = await User.findOneAndUpdate(
-      { username },
-      updatedData, // Оновлюємо дані користувача
-      { new: true }
-    );
+    const user = await User.findOneAndUpdate({ username }, updatedData, {
+      new: true
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -328,13 +327,11 @@ exports.editUserProfile = async (req, res) => {
   }
 };
 
-// Завантаження файлів на сервер
 exports.saveUploadedFile = async (req, res) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded");
   }
 
-  // Перевірка MIME-типу файлу
   try {
     const validationResult = await validateMIMEType(req.file.path, {
       originalFilename: req.file.originalname,
@@ -342,12 +339,10 @@ exports.saveUploadedFile = async (req, res) => {
     });
 
     if (!validationResult.ok) {
-      // Якщо перевірка не пройшла, видаляємо файл і повертаємо помилку
-      fs.unlinkSync(req.file.path); // Видаляємо завантажений файл
+      fs.unlinkSync(req.file.path);
       return res.status(400).send("Unsupported file type.");
     }
 
-    // Якщо файл підтримується, повертаємо його шлях
     return res.status(200).json({
       filePath: `http://${process.env.HOSTNAME}:${process.env.PORT}/uploads/${req.file.filename}`
     });

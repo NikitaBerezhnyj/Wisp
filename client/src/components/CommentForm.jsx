@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { IoMdSend } from "react-icons/io";
+import { addComment } from "../api/postApi";
+import { jwtDecode } from "jwt-decode";
 import "../styles/components/CommentForm.css";
 
-export default function CommentForm() {
+export default function CommentForm({ postId }) {
   const [text, setText] = useState("");
 
   const handleTextChange = e => {
@@ -12,8 +14,19 @@ export default function CommentForm() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log("Comment submitted:", text);
+  const getIdFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      return decoded._id;
+    }
+    return null;
+  };
+
+  const handleSubmit = async () => {
+    const userId = getIdFromToken();
+    const commentContent = text;
+    await addComment(postId, userId, commentContent);
     setText("");
   };
 

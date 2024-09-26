@@ -160,7 +160,11 @@ export default function Post({ post }) {
         </div>
       )}
       {showComments && (
-        <CommentList comments={post.comments} onClose={closeComments} />
+        <CommentList
+          postId={post._id}
+          comments={post.comments}
+          onClose={closeComments}
+        />
       )}
     </div>
   );

@@ -73,12 +73,12 @@ export const dislikePost = async (postId, userId) => {
   }
 };
 
-export const addComment = async (postId, commentData) => {
+export const addComment = async (postId, userId, commentData) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/posts/${postId}/comment`,
+    const response = await axios.post(`${API_URL}/posts/${postId}/comment`, {
+      userId,
       commentData
-    );
+    });
     return response.data;
   } catch (error) {
     throw error;

@@ -48,6 +48,19 @@ export const getUserProfile = async username => {
   }
 };
 
+export const getUserById = async userId => {
+  try {
+    const response = await axios.get(`${API_URL}/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in getUserById:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
 export const updateUserProfile = async updatedProfile => {
   try {
     const response = await axios.put(
