@@ -268,9 +268,7 @@ export default function SignIn() {
           </button>
         </form>
       </div>
-      <div className="image-container">
-        {/* <img src="/img/background.jpg" alt="Decorative boat animation" /> */}
-      </div>
+      <div className="image-container"></div>
     </div>
   );
 }

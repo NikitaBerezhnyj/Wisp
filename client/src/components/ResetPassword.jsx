@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { resetPassword } from "../api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Іконки для очей
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CgDanger } from "react-icons/cg";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import "../styles/components/ResetPassword.css";
@@ -11,8 +11,8 @@ export default function ResetPassword() {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Стан для видимості пароля
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false); // Стан для видимості повторного пароля
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const { token } = useParams();
   const navigate = useNavigate();
 
@@ -33,7 +33,6 @@ export default function ResetPassword() {
       }, 2000);
     } catch (err) {
       setMessage("");
-      // setError("Failed to reset password.");
       setError(err.response?.data?.message || "Failed to reset password.");
     }
   };
@@ -46,7 +45,7 @@ export default function ResetPassword() {
         <div className="password-input-container">
           <input
             id="password"
-            type={showPassword ? "text" : "password"} // Відповідно до стану видимості
+            type={showPassword ? "text" : "password"}
             placeholder="New password"
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -64,7 +63,7 @@ export default function ResetPassword() {
         <div className="password-input-container">
           <input
             id="password-repeat"
-            type={showRepeatPassword ? "text" : "password"} // Відповідно до стану видимості
+            type={showRepeatPassword ? "text" : "password"}
             placeholder="Repeat new password"
             value={repeatPassword}
             onChange={e => setRepeatPassword(e.target.value)}

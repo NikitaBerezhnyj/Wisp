@@ -24,17 +24,17 @@ export default function Profile() {
   const [isFollowingUser, setIsFollowingUser] = useState(false);
 
   const fetchUserPosts = async (userId, pageNumber) => {
-    if (loadingRef.current) return; // Якщо вже триває завантаження
-    loadingRef.current = true; // Встановлюємо, що триває завантаження
+    if (loadingRef.current) return;
+    loadingRef.current = true;
 
     try {
       const newPosts = await getUserPosts(userId, pageNumber);
       setUserPosts(prevPosts => [...prevPosts, ...newPosts]);
-      setHasMore(newPosts.length > 0); // Перевірка, чи є ще пости
+      setHasMore(newPosts.length > 0);
     } catch (error) {
       console.error("Error fetching user posts:", error);
     } finally {
-      loadingRef.current = false; // Завантаження завершено
+      loadingRef.current = false;
     }
   };
 
@@ -42,15 +42,13 @@ export default function Profile() {
     try {
       const data = await getUserProfile(usernameFromUrl);
 
-      // Отримуємо id поточного користувача (залегенованого)
-      const currentUserId = getUserIdFromToken(); // Функція, яка повертає ID поточного користувача
-      // Встановлюємо значення isFollowingUser в залежності від перевірки
+      const currentUserId = getUserIdFromToken();
       setIsFollowingUser(
         data.followers.some(followerId => followerId === currentUserId)
       );
 
       setProfileData(data);
-      await fetchUserPosts(data.id, 1); // Завантажуємо лише першу сторінку постів
+      await fetchUserPosts(data.id, 1);
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
@@ -74,15 +72,14 @@ export default function Profile() {
   useEffect(() => {
     const usernameFromToken = getUsernameFromToken();
     const usernameFromUrl = getUsernameFromUrl();
-    setIsAnotherUser(usernameFromUrl !== usernameFromToken); // Перевірка, чи це інший користувач
+    setIsAnotherUser(usernameFromUrl !== usernameFromToken);
 
-    // Завантаження профілю та постів при зміні URL
     fetchUserProfileAndPosts(usernameFromUrl);
-  }, [location.pathname]); // Залежність - зміна шляху
+  }, [location.pathname]);
 
   useEffect(() => {
     if (profileData) {
-      fetchUserPosts(profileData.id, page); // Завантажуємо пости при зміні сторінки
+      fetchUserPosts(profileData.id, page);
     }
   }, [page, profileData]);
 
@@ -93,7 +90,7 @@ export default function Profile() {
         !loadingRef.current &&
         hasMore
       ) {
-        setPage(prevPage => prevPage + 1); // Збільшуємо номер сторінки
+        setPage(prevPage => prevPage + 1);
       }
     }, 200);
 
@@ -107,7 +104,7 @@ export default function Profile() {
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = jwtDecode(token);
-      return decoded._id; // Замість цього використовуйте ключ, який відповідає імені користувача в токені
+      return decoded._id;
     }
     return null;
   };
@@ -127,11 +124,11 @@ export default function Profile() {
   };
 
   const handleEditClick = () => {
-    setIsOpenProfileEdit(true); // Відкриття форми редагування
+    setIsOpenProfileEdit(true);
   };
 
   const handleCloseEdit = () => {
-    setIsOpenProfileEdit(false); // Закриття форми редагування
+    setIsOpenProfileEdit(false);
   };
 
   const updateProfileData = updatedData => {

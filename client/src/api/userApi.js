@@ -1,9 +1,7 @@
 import axios from "axios";
 
-// Основний URL для вашого бекенду
 const API_URL = "http://localhost:3001/api";
 
-// Функція для реєстрації користувача
 export const registerUser = async userData => {
   try {
     const response = await axios.post(`${API_URL}/register`, userData);
@@ -13,7 +11,6 @@ export const registerUser = async userData => {
   }
 };
 
-// Функція для входу користувача
 export const loginUser = async credentials => {
   try {
     const response = await axios.post(`${API_URL}/login`, credentials);
@@ -23,11 +20,10 @@ export const loginUser = async credentials => {
   }
 };
 
-// Функція для отримання даних пошуку користувачів
 export const getSearchedUser = async searchPrompt => {
   try {
     const response = await axios.get(`${API_URL}/search`, {
-      params: { searchPrompt } // Додаємо параметри запиту
+      params: { searchPrompt }
     });
     return response.data;
   } catch (error) {
@@ -39,7 +35,6 @@ export const getSearchedUser = async searchPrompt => {
   }
 };
 
-// Функція для отримання даних профілю користувача
 export const getUserProfile = async username => {
   try {
     const response = await axios.get(`${API_URL}/profile/${username}`);
@@ -53,7 +48,6 @@ export const getUserProfile = async username => {
   }
 };
 
-// Оновлення інформації про користувача (about та avatar)
 export const updateUserProfile = async updatedProfile => {
   try {
     const response = await axios.put(
@@ -71,28 +65,6 @@ export const updateUserProfile = async updatedProfile => {
   }
 };
 
-// // Функція для підписки на користувача
-// export const followUser = async userId => {
-//   try {
-//     const response = await axios.post(`${API_URL}/follow`, { userId });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error following user:", error);
-//     throw error;
-//   }
-// };
-
-// // Функція для відписки від користувача
-// export const unfollowUser = async userId => {
-//   try {
-//     const response = await axios.post(`${API_URL}/unfollow`, { userId });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error unfollowing user:", error);
-//     throw error;
-//   }
-// };
-// Функція для підписки на користувача
 export const followUser = async (userId, followerId) => {
   try {
     const response = await axios.post(`${API_URL}/follow`, {
@@ -106,7 +78,6 @@ export const followUser = async (userId, followerId) => {
   }
 };
 
-// Функція для відписки від користувача
 export const unfollowUser = async (userId, followerId) => {
   try {
     const response = await axios.post(`${API_URL}/unfollow`, {
@@ -120,7 +91,6 @@ export const unfollowUser = async (userId, followerId) => {
   }
 };
 
-// Функція для надсилання листа з скиданням пароля
 export const sendPasswordResetEmail = async email => {
   try {
     const response = await axios.post(`${API_URL}/password/change`, {
@@ -137,19 +107,17 @@ export const sendPasswordResetEmail = async email => {
   }
 };
 
-// Функція для скидання пароля
 export const resetPassword = async (token, newPassword) => {
   try {
     const response = await axios.post(`${API_URL}/password/reset/${token}`, {
       password: newPassword
     });
-    return response.data; // Наприклад, підтвердження, що пароль змінено
+    return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-// Функція надсилання повідомлення про помилку від користувача
 export const reportFromUser = async reportData => {
   try {
     await axios.post(`${API_URL}/send-report`, reportData);
@@ -159,23 +127,11 @@ export const reportFromUser = async reportData => {
   }
 };
 
-// export const saveUploadFile = async selectedFile => {
-//   try {
-//     const response = await axios.put(`${API_URL}/upload`, selectedFile);
-//     console.log("Upload file save successfully");
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error saving upload file:", error);
-//   }
-// };
-
 export const saveUploadFile = async selectedFile => {
   try {
-    // Створюємо об'єкт FormData
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    // Виконуємо PUT запит з використанням FormData
     const response = await axios.post(`${API_URL}/upload`, formData, {
       headers: {
         "Content-Type": "multipart/form-data"

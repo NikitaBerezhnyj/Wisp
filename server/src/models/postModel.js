@@ -23,7 +23,6 @@ const postSchema = new mongoose.Schema({
 
 const Post = mongoose.model("Post", postSchema);
 
-// Валідація поста
 const validatePost = data => {
   const schema = Joi.object({
     content: Joi.string().required().label("Content"),

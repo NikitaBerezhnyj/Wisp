@@ -114,7 +114,7 @@
 }
 
 .image-container {
-  background-image: url('../../../public/img/background(1).jpg');
+  background-image: url("../../../public/img/background(1).jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

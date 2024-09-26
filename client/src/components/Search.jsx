@@ -12,14 +12,12 @@ export default function Search() {
   const [error, setError] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
 
-  // Завантаження історії пошуків з localStorage при першому рендері
   useEffect(() => {
     const storedHistory =
       JSON.parse(localStorage.getItem("searchHistory")) || [];
     setSearchHistory(storedHistory);
   }, []);
 
-  // Оновлення історії пошуків в localStorage
   const updateSearchHistory = newSearch => {
     const updatedHistory = [
       newSearch,
@@ -29,16 +27,14 @@ export default function Search() {
     localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
   };
 
-  // Видалення запиту з історії
   const handleDeleteFromHistory = queryToDelete => {
     const updatedHistory = searchHistory.filter(item => item !== queryToDelete);
     setSearchHistory(updatedHistory);
     localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
   };
 
-  // Виконання пошуку
   const handleSearch = async searchQuery => {
-    const query = searchQuery || searchPrompt; // Якщо передається запит з історії, використовуємо його
+    const query = searchQuery || searchPrompt;
     if (query.trim() === "") return;
 
     setLoading(true);
@@ -46,7 +42,7 @@ export default function Search() {
     try {
       const results = await getSearchedUser(query);
       setSearchResults(results);
-      updateSearchHistory(query); // Додавання запиту до історії
+      updateSearchHistory(query);
     } catch (err) {
       setError("An error occurred while searching.");
     } finally {
@@ -54,16 +50,14 @@ export default function Search() {
     }
   };
 
-  // Обробка кліку на запит з історії
   const handleHistoryClick = query => {
-    setSearchPrompt(query); // Заповнити поле пошуку
-    handleSearch(query); // Виконати пошук
+    setSearchPrompt(query);
+    handleSearch(query);
   };
 
-  // Виконання пошуку під час введення
   const handleInputChange = async e => {
     const query = e.target.value;
-    setSearchPrompt(query); // Оновлення state
+    setSearchPrompt(query);
 
     if (query.trim() !== "") {
       setLoading(true);
@@ -77,11 +71,10 @@ export default function Search() {
         setLoading(false);
       }
     } else {
-      setSearchResults([]); // Очищення результатів, якщо поле пусте
+      setSearchResults([]);
     }
   };
 
-  // Фільтрація результатів на основі searchPrompt
   const filteredResults = searchResults.filter(user =>
     user.username.toLowerCase().includes(searchPrompt.toLowerCase())
   );
@@ -96,7 +89,7 @@ export default function Search() {
             placeholder="Search for users..."
             className="search-input"
             value={searchPrompt}
-            onChange={handleInputChange} // Виклик функції під час введення
+            onChange={handleInputChange}
           />
           <button className="search-button" onClick={() => handleSearch()}>
             Search
@@ -106,7 +99,6 @@ export default function Search() {
         {loading && <p>Loading...</p>}
         {error && <p className="error-message">{error}</p>}
 
-        {/* Історія пошуків відображається тільки коли поле пошуку порожнє */}
         {searchPrompt === "" && (
           <div className="search-history">
             {searchHistory.length >= 1 ? (
@@ -138,14 +130,13 @@ export default function Search() {
           </div>
         )}
 
-        {/* Результати пошуку */}
         {searchPrompt !== "" && (
           <div>
             {filteredResults.length > 0
               ? filteredResults.map((user, index) => (
                   <div
                     onClick={() => {
-                      setSearchPrompt(user.username); // Заповнити поле пошуку
+                      setSearchPrompt(user.username);
                       updateSearchHistory(user.username);
                     }}
                   >
@@ -155,8 +146,8 @@ export default function Search() {
                       countFollowers={user.followers.length}
                       userAvatar={user.avatarImage}
                       onSelect={() => {
-                        setSearchPrompt(user.username); // Заповнити поле пошуку
-                        updateSearchHistory(user.username); // Додавання запиту до історії
+                        setSearchPrompt(user.username);
+                        updateSearchHistory(user.username);
                       }}
                     />
                   </div>

@@ -5,7 +5,7 @@ import Comment from "./Comment";
 import "../styles/components/CommentList.css";
 
 export default function CommentList({ onClose }) {
-  const [comments, setComments] = useState(["asd", "asd"]); // Змінна для зберігання коментарів
+  const [comments, setComments] = useState(["asd", "asd"]);
 
   const handleClickOutside = event => {
     if (event.target.classList.contains("comments-container")) {

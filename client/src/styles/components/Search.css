@@ -2,101 +2,103 @@
 @import url("../Spacing.css");
 
 .search-container {
-    background-color: var(--color-background);
-    border-radius: 25px;
-    padding: 24px 0;
-    margin: 36px auto;
-    min-height: 85vh;
+  background-color: var(--color-background);
+  border-radius: 25px;
+  padding: 24px 0;
+  margin: 36px auto;
+  min-height: 85vh;
 }
 
 .search-wrap {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
 }
 
 .search-container h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--color-text);
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--color-text);
 }
 
 .search-input-container {
-    display: flex;
-    border-radius: 5px;
-    overflow: hidden;
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .search-button {
-    height: fit-content;
+  height: fit-content;
 }
 
 .search-history {
-    background-color: var(--color-post-background);
-    /* Темний фон для історії пошуку */
-    border: 1px solid var(--color-form-border);
-    /* Бордер */
-    border-radius: 8px;
-    /* Заокруглені кути */
-    padding: 10px;
-    /* Внутрішній відступ */
-    margin-top: 10px;
-    /* Відступ зверху */
+  background-color: var(--color-post-background);
+  /* Темний фон для історії пошуку */
+  border: 1px solid var(--color-form-border);
+  /* Бордер */
+  border-radius: 8px;
+  /* Заокруглені кути */
+  padding: 10px;
+  /* Внутрішній відступ */
+  margin-top: 10px;
+  /* Відступ зверху */
 }
 
 .search-history h4 {
-    text-align: center;
-    color: var(--color-secondary);
-    margin: auto;
+  text-align: center;
+  color: var(--color-secondary);
+  margin: auto;
 }
 
 .search-history ul {
-    padding: 0;
-    list-style: none;
+  padding: 0;
+  list-style: none;
 }
 
 .search-history li {
-    padding: 8px 12px;
-    /* Внутрішні відступи */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* Розташування елементів */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    /* Плавний перехід */
+  padding: 8px 12px;
+  /* Внутрішні відступи */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Розташування елементів */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  /* Плавний перехід */
 }
 
 .search-history li:hover {
-    background-color: var(--color-hover);
-    /* Зміна кольору при наведенні */
-    border-radius: 6px;
-    /* Заокруглені кути при наведенні */
+  background-color: var(--color-hover);
+  /* Зміна кольору при наведенні */
+  border-radius: 6px;
+  /* Заокруглені кути при наведенні */
 }
 
 .history-query {
-    color: var(--color-text);
-    /* Колір тексту для запиту */
-    font-weight: 500;
-    /* Жирний текст для запиту */
-    width: 100%;
+  color: var(--color-text);
+  /* Колір тексту для запиту */
+  font-weight: 500;
+  /* Жирний текст для запиту */
+  width: 100%;
 }
 
 .delete-history {
-    padding: 0;
-    background-color: transparent;
-    /* Прозорий фон */
-    color: var(--color-danger);
-    /* Колір тексту для кнопки видалення */
-    border: none;
-    /* Без бордеру */
-    transition: transform 0.3s ease, color 0.3s;
-    /* Плавний перехід */
+  padding: 0;
+  background-color: transparent;
+  /* Прозорий фон */
+  color: var(--color-danger);
+  /* Колір тексту для кнопки видалення */
+  border: none;
+  /* Без бордеру */
+  transition:
+    transform 0.3s ease,
+    color 0.3s;
+  /* Плавний перехід */
 }
 
 .delete-history:hover {
-    transform: scale(1.1);
-    /* Збільшення кнопки при наведенні */
-    color: var(--color-danger);
-    /* Зміна кольору тексту при наведенні */
+  transform: scale(1.1);
+  /* Збільшення кнопки при наведенні */
+  color: var(--color-danger);
+  /* Зміна кольору тексту при наведенні */
 }

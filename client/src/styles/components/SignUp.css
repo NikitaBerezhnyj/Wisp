@@ -1,7 +1,6 @@
 @import url("../Colors.css");
 @import url("../Spacing.css");
 
-
 .sign-up-wrapper {
   display: flex;
   flex-direction: row;

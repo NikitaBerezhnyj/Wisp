@@ -7,7 +7,7 @@ const resetTokenSchema = new mongoose.Schema({
     required: true,
     ref: "User"
   },
-  createdAt: { type: Date, default: Date.now, expires: 3600 } // Токен дійсний 1 годину
+  createdAt: { type: Date, default: Date.now, expires: 3600 }
 });
 
 const ResetToken = mongoose.model("ResetToken", resetTokenSchema);
