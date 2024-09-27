@@ -146,5 +146,18 @@ exports.editPost = async (req, res) => {
 };
 
 exports.deletePost = async (req, res) => {
-  // Реалізувати код тут
+  const postId = req.params.id;
+
+  try {
+    const result = await Post.deleteOne({ _id: postId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ message: "Error deleting post" });
+  }
 };

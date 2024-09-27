@@ -62,6 +62,7 @@
 .post-actions {
   display: flex;
   gap: 10px;
+  position: relative;
 }
 
 .post-action-button {
@@ -87,4 +88,54 @@
 
 .post-action-button.active {
   color: var(--color-primary);
+}
+
+.post-more-action-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-form-border);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: -5px;
+  /* Зменшуємо відстань між кнопкою і контейнером */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  /* Залишаємо позицію абсолютною */
+  right: 0;
+  bottom: 100%;
+  /* Вирівнюємо по правому краю */
+  z-index: 100;
+  width: max-content;
+  /* Підвищуємо пріоритет для відображення поверх інших елементів */
+}
+
+
+.post-more-action-container button {
+  background: none;
+  /* No background for buttons */
+  border: none;
+  /* No border for buttons */
+  color: var(--color-text);
+  /* Use the text color */
+  font-size: 16px;
+  /* Slightly larger font size for visibility */
+  padding: 8px 10px;
+  /* Padding for buttons */
+  cursor: pointer;
+  /* Pointer cursor for buttons */
+  transition: background-color 0.3s, color 0.3s;
+  /* Smooth transition for hover effects */
+}
+
+.post-more-action-container button:hover {
+  background-color: var(--color-hover);
+  /* Background color on hover */
+  color: var(--color-primary);
+  /* Change text color on hover */
+}
+
+.post-more-action-container button:not(:last-child) {
+  margin-bottom: 5px;
+  /* Space between buttons */
 }

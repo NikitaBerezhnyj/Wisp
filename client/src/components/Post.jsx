@@ -5,7 +5,7 @@ import { GrLike, GrDislike } from "react-icons/gr";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import CommentList from "./CommentList";
-import { likePost, dislikePost } from "../api/postApi";
+import { likePost, dislikePost, deletePost } from "../api/postApi";
 import "../styles/components/Post.css";
 
 export default function Post({ post }) {
@@ -36,17 +36,21 @@ export default function Post({ post }) {
     setPosterId(post.user._id);
     setLiked(post.likes.includes(id));
     setDisliked(post.dislikes.includes(id));
-
-    if (userId === posterId) {
-      setIsAnotherUserPost(true);
-    } else {
-      setIsAnotherUserPost(false);
-    }
   }, [post.likes, post.dislikes]);
+
+  useEffect(() => {
+    const id = getIdFromToken();
+    setUserId(id);
+    setPosterId(post.user._id);
+
+    if (id && post.user) {
+      setIsAnotherUserPost(id === post.user._id);
+    }
+  }, [post, userId]);
 
   const handleLikeClick = async () => {
     try {
-      await likePost(post._id, userId); // Відправка запиту на бекенд
+      await likePost(post._id, userId);
       setLiked(!liked);
       setLikeCounter(liked ? likeCounter - 1 : likeCounter + 1);
       if (disliked) {
@@ -60,7 +64,7 @@ export default function Post({ post }) {
 
   const handleDislikeClick = async () => {
     try {
-      await dislikePost(post._id, userId); // Відправка запиту на бекенд
+      await dislikePost(post._id, userId);
       setDisliked(!disliked);
       setDislikeCounter(disliked ? dislikeCounter - 1 : dislikeCounter + 1);
       if (liked) {
@@ -74,6 +78,14 @@ export default function Post({ post }) {
 
   const handleMoreClick = () => {
     setIsMoreOpen(!isMoreOpen);
+  };
+
+  const handleDelatePost = async () => {
+    try {
+      await deletePost(post._id);
+    } catch (error) {
+      console.error("Error disliking post:", error);
+    }
   };
 
   const handleCommentsClick = () => {
@@ -137,28 +149,25 @@ export default function Post({ post }) {
           </button>
         </div>
         <div className="post-actions">
-          <button
-            className={`post-action-button ${liked ? "active" : ""}`}
-            onClick={handleMoreClick}
-          >
+          <button className="post-action-button" onClick={handleMoreClick}>
             <BsThreeDots />
           </button>
-        </div>
-      </div>
-      {isMoreOpen && (
-        <div className="post-more-action-container">
-          {isAnotherUserPost ? (
-            <>
-              <button>Edit Post</button>
-              <button>Delete Post</button>
-            </>
-          ) : (
-            <>
-              <button>Report</button>
-            </>
+          {isMoreOpen && (
+            <div className="post-more-action-container">
+              {isAnotherUserPost ? (
+                <>
+                  <button>Edit Post</button>
+                  <button onClick={handleDelatePost}>Delete Post</button>
+                </>
+              ) : (
+                <>
+                  <button>Report</button>
+                </>
+              )}
+            </div>
           )}
         </div>
-      )}
+      </div>
       {showComments && (
         <CommentList
           postId={post._id}
