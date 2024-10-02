@@ -4,7 +4,7 @@
   "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app.js"
+    "start": "nodemon ./src/config/serverConfig.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +21,9 @@
     "mongoose": "^8.6.2",
     "mongose": "^0.0.2-security",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.15",
-    "nodemon": "^3.1.4"
+    "nodemailer": "^6.9.15"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

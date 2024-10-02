@@ -1,35 +1,28 @@
-version: "3.8"
-
+version: "3"
 services:
   client:
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: ../client
+      dockerfile: ../docker/client/Dockerfile
     ports:
       - "5173:5173"
-    depends_on:
-      - server
+    volumes:
+      - ../client:/app
 
   server:
     build:
-      context: ./server
-      dockerfile: Dockerfile
+      context: ../server
+      dockerfile: ../docker/server/Dockerfile
     ports:
       - "3001:3001"
-    environment:
-      - NODE_ENV=production
-      - DB_URI=mongodb://mongo:27017/wisp
     volumes:
-      - ./server/src:/app/src
-    depends_on:
-      - mongo
-
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
-    healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.admin().ping()"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - ../server:/app
+    environment:
+      - PORT=3001
+      - HOSTNAME="localhost"
+      - ORIGIN_WEBSITE="http://localhost:5173"
+      - DB="mongodb://localhost:27017/wisp"
+      - SALT=10
+      - JWT_PRIVATE_TOKEN="supersecureandlongsecretkeyforwispapp2024$%^&!"
+      - EMAIL='help.wisp@gmail.com'
+      - PASSWORD='rwmprundchjunljb

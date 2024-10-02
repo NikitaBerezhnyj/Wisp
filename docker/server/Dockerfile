@@ -1,21 +1,9 @@
-# Dockerfile для server
-FROM node:18
-
-# Встановлення робочої директорії
+FROM node:22.7.0-alpine
 WORKDIR /app
-
-# Копіюємо package.json та package-lock.json
-COPY package*.json ./
-
-# Встановлюємо залежності
+COPY package.json package-lock.json ./
 RUN npm install
-
-# Копіюємо весь код
+RUN npm install -g nodemon
+RUN npm install -g dotenv
 COPY . .
-
-# Виставляємо порт
 EXPOSE 3001
-
-# Запускаємо сервер
 CMD ["npm", "start"]
-

@@ -14,6 +14,7 @@ router.get("/user/:id", userController.getUserById);
 router.get("/search", userController.getUserSearchInfo);
 router.get("/profile/:username", userController.getUserProfileInfo);
 router.put("/profile/:username/edit", userController.editUserProfile);
+router.delete("/user/:id", userController.deleteUser);
 
 router.post("/upload", upload.single("file"), userController.saveUploadedFile);
 

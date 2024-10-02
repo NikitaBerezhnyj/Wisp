@@ -1,23 +1,14 @@
-# Dockerfile для client
-FROM node:18
-
-# Встановлення робочої директорії
+FROM node:18-alpine
 WORKDIR /app
-
-# Копіюємо package.json та package-lock.json
-COPY package*.json ./
-
-# Встановлюємо залежності
+COPY package.json package-lock.json ./
 RUN npm install
-
-# Копіюємо весь код
+RUN npm install -g vite
 COPY . .
-
-# Будуємо застосунок
-RUN npm run build
-
-# Виставляємо порт
+# До релізний запуск
 EXPOSE 5173
-
-# Запускаємо застосунок
 CMD ["npm", "run", "dev"]
+# Запуск на релізі
+# COPY --from=build /app/dist ./dist
+# RUN npm install -g serve
+# EXPOSE 5173
+# CMD ["serve", "-s", "dist", "-l", "5173"]

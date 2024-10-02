@@ -1,47 +1,43 @@
-// Завантаження змінних середовища та імпорт необхідних модулів
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-// Підключення власних рішень
-const connection = require("./database");
+const connection = require("./config/dbConfig");
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
 
-// Створення екземпляра Express
 const app = express();
 
-// Визначення порту і хосту для запуску сервера
-const PORT = process.env.PORT || 3001;
-const HOSTNAME = process.env.HOSTNAME || "127.1.2.133";
+const requiredEnvVars = [
+  "PORT",
+  "HOSTNAME",
+  "ORIGIN_WEBSITE",
+  "DB",
+  "SALT",
+  "JWT_PRIVATE_TOKEN",
+  "EMAIL",
+  "PASSWORD"
+];
 
-// Перевірка змінних середовища
-if (
-  !process.env.ORIGIN_WEBSITE ||
-  !process.env.DB ||
-  !process.env.JWT_PRIVATE_TOKEN ||
-  !process.env.SALT
-) {
-  console.error("Missing necessary environment variables");
+const missingVars = requiredEnvVars.filter(key => !process.env[key]);
+
+if (missingVars.length > 0) {
+  console.error(
+    `Missing necessary environment variables: ${missingVars.join(", ")}`
+  );
   process.exit(1);
 }
 
-// Проміжне програмне забезпечення
-// app.use(cors({ origin: process.env.ORIGIN_WEBSITE }));
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(
+  cors({ origin: process.env.ORIGIN_WEBSITE || "http://localhost:5173" })
+);
 app.use(express.json());
 
-// Підключення до бази даних MongoDB
 connection();
 
-// Налаштування маршрутизації API
 app.use("/api", userRoutes);
 app.use("/api", postRoutes);
 
-// Роздача файлів з теки uploads
 app.use("/uploads", express.static("uploads"));
 
-// Запуск сервера
-app.listen(PORT, HOSTNAME, () => {
-  console.log(`Server started on http://${HOSTNAME}:${PORT}`);
-});
+module.exports = app;

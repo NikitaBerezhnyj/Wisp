@@ -140,6 +140,15 @@ export const reportFromUser = async reportData => {
   }
 };
 
+export const deleteUser = async userId => {
+  try {
+    await axios.delete(`${API_URL}/user/${userId}`);
+    console.log("Error deleting user");
+  } catch (error) {
+    console.error("Error deleting user:", error);
+  }
+};
+
 export const saveUploadFile = async selectedFile => {
   try {
     const formData = new FormData();
